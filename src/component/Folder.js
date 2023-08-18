@@ -51,8 +51,8 @@ function Folder({handleInsertNode=()=>{},handleUpdateNode=()=>{},explore}){
                 <div className="folder" onClick={()=>setExpand(!expand)}>
                     <div className="folderTitle">
                     <span >📂{explore.name}</span> 
-                    {/* <input type="text" value={explore.name} id={explore.id} style={{visibility:"hidden"}}/> */}
                     </div>
+                 
                     <div>
                         <button onClick={(e)=>handleNewFoder(e,true)}>folder ➕</button>
                         <button onClick={(e)=>handleNewFoder(e,false)}>file ➕</button>

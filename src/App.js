@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Folder handleInsertNode={handleInsertNode} handleUpdateNode={handleUpdateNode} explore={exploreData}/>
+      <Folder handleUpdateNode={handleUpdateNode} handleInsertNode={handleInsertNode} explore={exploreData}/>
     </>
   );
 }
