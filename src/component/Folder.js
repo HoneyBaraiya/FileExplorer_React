@@ -1,19 +1,35 @@
 import { useState } from "react"
 
-function Folder({handleInsertNode=()=>{},explore}){
+function Folder({handleInsertNode=()=>{},handleUpdateNode=()=>{},explore}){
     const [expand,setExpand]=useState(false);
     const [showInput,setShowInput]=useState({
         visible:false,
-        isFolder:false
+        isFolder:false,
+        update:false
     });
+
+  
     const handleNewFoder=(e,isFolder)=>{
         e.stopPropagation();
         setExpand(true);
         setShowInput({
             visible:true,
-            isFolder
+            isFolder,
+            update:false
         })
     }
+
+    const handleUpdateFolder=(e,isFolder)=>{
+        e.stopPropagation();
+        setExpand(true);
+        setShowInput({
+            visible:true,
+            isFolder,
+            update:true
+        })
+       
+    }
+
     const onAddFolder=(e)=>{
         if(e.keyCode===13 && e.target.value){
             //add logic
@@ -22,14 +38,26 @@ function Folder({handleInsertNode=()=>{},explore}){
         }
         
     }
+    const onUpdateFolder=(e)=>{
+        if(e.keyCode===13 && e.target.value){
+            //update logic here
+            handleUpdateNode(explore.id, e.target.value,showInput.isFolder);
+            setShowInput({...showInput,visible:false});
+        }
+    }
     if(explore.isFolder){
         return(
             <div style={{margin:5}}>
                 <div className="folder" onClick={()=>setExpand(!expand)}>
-                    <span>📂{explore.name}</span>
+                    <div className="folderTitle">
+                    <span >📂{explore.name}</span> 
+                    {/* <input type="text" value={explore.name} id={explore.id} style={{visibility:"hidden"}}/> */}
+                    </div>
                     <div>
                         <button onClick={(e)=>handleNewFoder(e,true)}>folder ➕</button>
                         <button onClick={(e)=>handleNewFoder(e,false)}>file ➕</button>
+                        <button onClick={(e)=>handleUpdateFolder(e,true)}>Update🖋️</button>
+                        <button>Delete 🗑️</button>
                     </div>
                 </div>
 
@@ -42,14 +70,17 @@ function Folder({handleInsertNode=()=>{},explore}){
                                 <span>{showInput.isFolder?"📂":"🗃️"}</span>
                                 <input type="text" className="inputNew" 
                                 onBlur={()=>setShowInput({...showInput,visible:false})}
-                                onKeyDown={onAddFolder}
+                                // onKeyDown={onAddFolder}
+                                onKeyDown={showInput.update?onUpdateFolder:onAddFolder}
                                 autoFocus />
                             </div>
                         )
                     }
                     
                     {explore.item.map((exp)=>{
-                        return <Folder handleInsertNode={handleInsertNode} explore={exp} key={exp.id}/>
+                        return showInput.update
+                         ?<Folder handleUpdateNode={handleUpdateNode} explore={exp} key={exp.id}/>
+                         :<Folder handleInsertNode={handleInsertNode} explore={exp} key={exp.id}/>
                     })}
                 </div>
             </div>

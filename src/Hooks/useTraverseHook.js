@@ -8,14 +8,30 @@ const useTraverse=()=>{
                 isFolder,
                 item:[]
             });
-            return tree;
         }
         let latestNode=tree.item.map((ob)=>{
             return insertNode(ob,folderId, item,isFolder)
         });
         return{...tree,item:latestNode};
     }
+
+    const updateNode=function (tree,folderId, item,isFolder) {
+        console.log("in update");
+        console.log("tree...",tree);
+        console.log("folder...",folderId);
+        console.log("item...",item);    
+        
+        if(tree.id===folderId){
+            tree.name=item;
+            return tree;
+        }
+        let latestNode=tree.item.map((ob)=>{
+            return updateNode(ob,folderId, item,isFolder)
+        });
+        return{...tree,item:latestNode};
+      }
+    
    
-    return{insertNode};
+    return{insertNode,updateNode};
 }
 export default useTraverse;

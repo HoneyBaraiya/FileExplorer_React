@@ -7,15 +7,22 @@ function App() {
 
   const [exploreData,setExploreData]=useState(explorer);
   
-  const {insertNode}=useTraverse();
+  const {insertNode,updateNode}=useTraverse();
+
 
   const handleInsertNode=(folderId, item,isFolder)=>{
     const finalTree=insertNode(exploreData,folderId, item,isFolder);
     setExploreData(finalTree);
   }
+
+  const handleUpdateNode=(folderId,item,isFolder)=>{
+    const finalTree=updateNode(exploreData,folderId,item,isFolder);
+    setExploreData(finalTree);
+  }
+
   return (
     <>
-      <Folder handleInsertNode={handleInsertNode} explore={exploreData}/>
+      <Folder handleInsertNode={handleInsertNode} handleUpdateNode={handleUpdateNode} explore={exploreData}/>
     </>
   );
 }
