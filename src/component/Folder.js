@@ -57,13 +57,11 @@ function Folder({handleInsertNode=()=>{},handleUpdateNode=()=>{},explore}){
                         <button onClick={(e)=>handleNewFoder(e,true)}>folder ➕</button>
                         <button onClick={(e)=>handleNewFoder(e,false)}>file ➕</button>
                         <button onClick={(e)=>handleUpdateFolder(e,true)}>Update🖋️</button>
-                        <button>Delete 🗑️</button>
+                        
                     </div>
                 </div>
 
                 <div style={{display:expand?"block":"none", paddingLeft:25 }}>      
-
-
                     {
                         showInput.visible && (
                             <div className="inputContainer">
